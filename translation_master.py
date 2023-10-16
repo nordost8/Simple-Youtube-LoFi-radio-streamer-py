@@ -96,7 +96,8 @@ class YoutubeStreamer:
         for video_name in video_queue_cycled:
             self.actualize_playlist()
             video_path = self.video_paths_by_names[video_name]
-
+            if not self.writer:
+                self.writer = self.get_yt_writer(video_path)
             stream = CamGear(source=video_path).start()
             while True:
                 fframe = stream.read()
