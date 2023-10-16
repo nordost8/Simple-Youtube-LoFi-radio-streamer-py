@@ -1,10 +1,11 @@
+import os
 import random
 from vidgear.gears import CamGear
 from vidgear.gears import WriteGear
 
 from video_master import get_file_paths_and_names, PATH_TO_VIDEOS_FOLDER
 
-YOUTUBE_STREAM_KEY = "5pr3-hqe6-baph-6h5b-7xc5"
+YOUTUBE_STREAM_KEY = os.getenv('YOUTUBE_STREAM_KEY') # or change to string, example: "5s63-hte6-baph-6h5b-7777"
 
 
 class ShuffleCycle:
@@ -17,10 +18,8 @@ class ShuffleCycle:
     """
 
     def __init__(self, iterable):
-        self.iterable = iterable
-        self.shuffled_iterable = list(self.iterable)
-        random.shuffle(self.shuffled_iterable)
-
+        random.shuffle(iterable)
+        self.shuffled_iterable = iterable
         self.index = 0
         self.max_index = len(self.shuffled_iterable) - 1
 
@@ -67,7 +66,7 @@ class YoutubeStreamer:
 
         first_path = self.video_paths_by_names[self.video_queue[0]] if hasattr(self, 'video_paths_by_names') else None
         if first_path is None:
-            print("Audio clips not found ;(\n Please add minimum 1 video!")
+            print("Audio clips not found ;(\n Please add minimum 1 video with .mp4 format!")
             exit()
         self.writer = self.get_yt_writer(first_path)
         # Odd code due to asynchrony:
@@ -95,11 +94,9 @@ class YoutubeStreamer:
     def framer(self):
         video_queue_cycled = ShuffleCycle(self.video_queue)
         for video_name in video_queue_cycled:
-            print("Next audio:", video_name)
-            if not self.writer:
-                self.writer = self.get_yt_writer(video_path)
             self.actualize_playlist()
             video_path = self.video_paths_by_names[video_name]
+
             stream = CamGear(source=video_path).start()
             while True:
                 fframe = stream.read()
