@@ -1,0 +1,3 @@
+This folder will contain the finalized videos generated based on your audio (video_master_example.py)
+
+Do not delete this folder!
