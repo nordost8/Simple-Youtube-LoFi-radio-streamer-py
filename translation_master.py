@@ -1,5 +1,7 @@
 import os
 import random
+import time
+
 from vidgear.gears import CamGear
 from vidgear.gears import WriteGear
 
@@ -62,12 +64,17 @@ class YoutubeStreamer:
             "-coder": 1,
             "-threads": 6,
         }
-        self.actualize_playlist()
 
-        first_path = self.video_paths_by_names[self.video_queue[0]] if hasattr(self, 'video_paths_by_names') else None
-        if first_path is None:
-            print("Audio clips not found ;(\n Please add minimum 1 video with .mp4 format!")
-            exit()
+        while True:
+            self.actualize_playlist()
+            first_path = self.video_paths_by_names[self.video_queue[0]] if hasattr(self, 'video_paths_by_names') else None
+            if first_path is None:
+                print("Audio clips not found ;(\n Please add minimum 1 video with .mp4 format!")
+            else:
+                break
+            time.sleep(1)
+
+
         self.writer = self.get_yt_writer(first_path)
         # Odd code due to asynchrony:
         # We write frames as stated in the documentation (this is mandatory)
