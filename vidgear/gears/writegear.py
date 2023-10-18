@@ -585,6 +585,7 @@ class WriteGear:
             + self.__ffmpeg_preheaders
             + ["-f", "rawvideo", "-vcodec", "rawvideo"]
             + input_parameters
+            + ["-thread_queue_size", '512']
             + ["-i", "-"]
             + self.__ffmpeg_realtime_stream
             + output_parameters
