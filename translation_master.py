@@ -46,8 +46,8 @@ class YoutubeStreamer:
         self.output_params = {
             "-re": True,
             "-i": None,
+            "-thread_queue_size": 512,
             "-ar": 96000,
-            "-b:a": "320k",
             "-vcodec": "libx264",
             "-pix_fmt": "yuv420p",
             "-f": "flv",
