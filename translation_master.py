@@ -45,8 +45,8 @@ class YoutubeStreamer:
     def __init__(self):
         self.output_params = {
             "-re": True,
-            "-i": None,
             "-thread_queue_size": 512,
+            "-i": None,
             "-ar": 96000,
             "-vcodec": "libx264",
             "-pix_fmt": "yuv420p",
