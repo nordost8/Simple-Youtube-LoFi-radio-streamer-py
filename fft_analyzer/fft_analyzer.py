@@ -1,5 +1,5 @@
 import argparse
-from src.streamanalyzer import StreamAnalyzer
+from .src.streamanalyzer import StreamAnalyzer
 
 
 def parse_args():

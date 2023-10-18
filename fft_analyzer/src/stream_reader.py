@@ -1,9 +1,8 @@
 import wave
-import pyaudio
 import time
 from collections import deque
 from pydub import AudioSegment
-from utils import *
+from .utils import *
 import os
 
 ROOT_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
@@ -21,7 +20,6 @@ class StreamReader:
 
         self.stream_start_time = None
         self.analyzer_cls_link = analyzer_cls_link
-        self.pa = pyaudio.PyAudio()
 
         # Temporary variables #hacks!
         self.update_window_n_frames = 1024  # Don't remove this, needed for device testing!

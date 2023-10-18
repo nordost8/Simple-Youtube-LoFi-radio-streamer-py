@@ -1,15 +1,11 @@
 import os
-import random
-import shutil
-
-import cv2
 import numpy as np
 import math
 import pygame
-from PIL import Image
 from matplotlib import cm
 
-class Spectrum_Visualizer:
+
+class SpectrumVisualizer:
     """
     The Spectrum_Visualizer visualizes spectral FFT data using a simple PyGame GUI
     """

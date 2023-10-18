@@ -1,10 +1,10 @@
 import time
 from scipy.signal import savgol_filter
 
-from stream_reader import StreamReader
-from visualizer import Spectrum_Visualizer
-from fft import getFFT
-from utils import *
+from .stream_reader import StreamReader
+from .visualizer import SpectrumVisualizer
+from .fft import getFFT
+from .utils import *
 
 
 class StreamAnalyzer:
@@ -123,7 +123,7 @@ class StreamAnalyzer:
         # We run a visualizer (actually a game) that provides the update() method to update the image based on the provided data.
         # The data is read from an audio file and placed in a common buffer, from which they are pulled into the game during update():
 
-        self.visualizer = Spectrum_Visualizer(self)
+        self.visualizer = SpectrumVisualizer(self)
         self.visualizer.start()
         self.stream_reader.start_audio_reading(self.data_windows_to_buffer)
         print("Animation clips generated")
