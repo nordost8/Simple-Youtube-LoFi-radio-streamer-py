@@ -7,7 +7,7 @@ from vidgear.gears import WriteGear
 
 from video_master import get_file_paths_and_names, PATH_TO_VIDEOS_FOLDER
 
-YOUTUBE_STREAM_KEY = os.getenv('YOUTUBE_STREAM_KEY') # or change to string, example: "5s63-hte6-baph-6h5b-7777"
+YOUTUBE_STREAM_KEY = 'eesv-9bje-4bfb-au40-7w7h' # or change to string, example: "5s63-hte6-baph-6h5b-7777"
 
 
 class ShuffleCycle:
@@ -102,12 +102,10 @@ class YoutubeStreamer:
         for video_name in video_queue_cycled:
             self.actualize_playlist()
             video_path = self.video_paths_by_names[video_name]
-            if not self.writer:
-                self.writer = self.get_yt_writer(video_path)
             stream = CamGear(source=video_path).start()
             while True:
                 fframe = stream.read()
-                if self.writer is None:
+                if not self.writer or fframe is None:
                     stream.stop()
                     break
                 yield fframe, video_path
