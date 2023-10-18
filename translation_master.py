@@ -105,6 +105,7 @@ class YoutubeStreamer:
             stream = CamGear(source=video_path).start()
             while True:
                 fframe = stream.read()
+                print('frame:', str(fframe)[:10])
                 if not self.writer or fframe is None:
                     stream.stop()
                     break
