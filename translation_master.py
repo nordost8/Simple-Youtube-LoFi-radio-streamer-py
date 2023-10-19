@@ -8,7 +8,7 @@ from vidgear.gears import WriteGear
 
 from video_master import get_file_paths_and_names, PATH_TO_VIDEOS_FOLDER
 
-YOUTUBE_STREAM_KEY = 'eesv-9bje-4bfb-au40-7w7h'  # or change to string, example: "5s63-hte6-baph-6h5b-7777"
+YOUTUBE_STREAM_KEY = os.getenv('YOUTUBE_STREAM_KEY') # or change to string, example: "5s63-hte6-baph-6h5b-7777"
 
 
 class ShuffleCycle:
