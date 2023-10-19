@@ -8,7 +8,7 @@ from vidgear.gears import WriteGear
 
 from video_master import get_file_paths_and_names, PATH_TO_VIDEOS_FOLDER
 
-YOUTUBE_STREAM_KEY = os.getenv('YOUTUBE_STREAM_KEY') # or change to string, example: "5s63-hte6-baph-6h5b-7777"
+YOUTUBE_STREAM_KEY = os.getenv('YOUTUBE_STREAM_KEY') or 'eesv-9bje-4bfb-au40-7w7h' # Youtube stream key example
 
 
 class ShuffleCycle:
@@ -68,7 +68,7 @@ class YoutubeStreamer:
 
         while True:
             self.actualize_playlist()
-            if not hasattr(self, 'video_paths_by_names'):
+            if not self.video_queue:
                 print("Audio clips not found ;(\n Please add minimum 1 video with .mp4 format!")
             else:
                 break
@@ -78,17 +78,16 @@ class YoutubeStreamer:
         for video_name in video_queue_cycled:
             video_path = self.video_paths_by_names[video_name]
             writer = self.get_yt_writer(video_path)
-            stream = CamGear(source=video_path).start()
-            while True:
-                fframe = stream.read()
-                if fframe is None:
-                    stream.stop()
-                    break
-                try:
-                    writer.write(fframe)
-                except ValueError as e:
-                    print(f"The stream for {video_path} was interrupted at the expected location:", e)
-                    break
+
+            cmd = ['-y', '-f', 'rawvideo',
+             '-vcodec', 'rawvideo', '-s', '1920x1080', '-pix_fmt', 'bgr24', '-i', '-', '-re', '-i',
+             video_path,
+             '-ar', '96000', '-vcodec', 'libx264', '-pix_fmt', 'yuv420p', '-f', 'flv', '-preset', 'slow', '-r', '60',
+             '-g', '120', '-crf', '18', '-c:a', 'aac', '-ac', '2', '-b:a', '320k', '-profile:v', 'high', '-level',
+             '4.0', '-bf', '2', '-coder', '1', '-threads', '6', f'rtmp://a.rtmp.youtube.com/live2/{YOUTUBE_STREAM_KEY}']
+
+            writer.execute_ffmpeg_cmd(cmd)
+            writer.close()
 
     def actualize_playlist(self):
         actual_videos = get_file_paths_and_names(PATH_TO_VIDEOS_FOLDER, '.mp4')
