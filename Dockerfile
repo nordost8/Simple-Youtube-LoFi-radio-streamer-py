@@ -17,5 +17,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 RUN chmod +x /app/Simple-Youtube-LoFi-radio-streamer-py/run.sh
-CMD ["/bin/sh", "/app/Simple-Youtube-LoFi-radio-streamer-py/run.sh"]
-
+CMD ["/bin/bash", "/app/Simple-Youtube-LoFi-radio-streamer-py/run.sh"]
