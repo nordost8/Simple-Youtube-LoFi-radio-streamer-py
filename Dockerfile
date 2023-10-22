@@ -17,4 +17,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 RUN chmod +x ./run.sh
-CMD ["./run.sh"]
+CMD ["sh", "-c", "git -C /app/Simple-Youtube-LoFi-radio-streamer-py pull && ./run.sh"]
