@@ -37,10 +37,6 @@ class DynamicWriter:
             "-vcodec": "libx264",
             "-pix_fmt": "yuv420p",
             "-preset": "ultrafast",
-            "-b:v": "5M",
-            "-profile:v": "high",
-            "-level:v": "4.1",
-            "-crf": "18",
             "-input_framerate": self.TARGET_FRAME_RATE,  # MANDATORY FIELD FOR WriteGear (!) HERE, FPS IS ALSO REQUIRED.
             "-r": self.TARGET_FRAME_RATE
         }
