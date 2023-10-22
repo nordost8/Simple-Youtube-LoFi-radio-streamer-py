@@ -9,7 +9,7 @@ from video_master import get_file_paths_and_names, PATH_TO_VIDEOS_FOLDER
 
 YOUTUBE_STREAM_KEY = os.getenv('YOUTUBE_STREAM_KEY', '5pr3-hqe6-baph-6h5b-7xc5')
 FFMPEG_THREADS_COUNT = os.getenv('FFMPEG_THREADS_COUNT', 2)
-VIDEO_GROUPED_COUNT = os.getenv('VIDEO_GROUPED', 5)
+VIDEO_GROUPED_COUNT = int(os.getenv('VIDEO_GROUPED', 5))
 
 class ShuffleCycle:
     """
