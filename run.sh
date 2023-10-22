@@ -1,4 +1,7 @@
 #!/bin/bash
 
-nohup python video_master.py > video_master_log.txt 2>&1 &
-nohup python translation_master.py > translation_master_log.txt 2>&1 &
+# Запускаємо скрипт для генерації відео
+python video_master.py &
+
+# Запускаємо скрипт для трансляції на YouTube
+python translation_master.py
