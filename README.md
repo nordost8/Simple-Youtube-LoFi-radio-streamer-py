@@ -38,6 +38,8 @@ The code is relatively straightforward and customizable. You can easily modify a
 
 Wishing you successful radio streams and many listeners!
 
+(DEMO)[https://youtu.be/gCAapT06mlg]
+
 **Technologies used include:**
 - FFT analyzer for Animation Frames (FFT is used to analyze audio, extracting frequency data to generate synchronized, visually appealing animation frames)
 - YouTube Streaming with FFMPEG by RTMP protocol (FFMPEG and the RTMP protocol enable real-time video streaming to YouTube)
