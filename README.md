@@ -42,6 +42,6 @@ Wishing you successful radio streams and many listeners!
 - FFT analyzer for Animation Frames (FFT is used to analyze audio, extracting frequency data to generate synchronized, visually appealing animation frames)
 - YouTube Streaming with FFMPEG by RTMP protocol (FFMPEG and the RTMP protocol enable real-time video streaming to YouTube)
 
-About the FFT analyzer used here for generating beautiful video frames, and for further details on its customization and enhancement, please refer to my repository specifically focused on the FFT analyzer: [Magic-FFT-audio-visualizer-py](https://github.com/nordost8/Magic-FFT-audio-visualizer-py/blob/main/README.md).
+About the FFT analyzer used here for generating beautiful video frames, and for further details on its customization and enhancement, please refer to my repository specifically focused on the FFT analyzer: [Magic-FFT-audio-visualizer-py](https://github.com/nordost8/Magic-FFT-audio-visualizer-py).
 
 [![Telegram](https://img.icons8.com/color/48/000000/telegram-app.png)](https://t.me/nordost8)
