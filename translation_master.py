@@ -88,7 +88,7 @@ class YoutubeStreamer:
                 '-vcodec', 'libx264',
                 '-pix_fmt', 'yuv420p',
                 '-f', 'flv',
-                '-preset', 'slow',
+                '-preset', 'faster',
                 '-r', '60',
                 '-g', str(int(60 * 4)),
                 '-c:a', 'aac',
