@@ -91,6 +91,7 @@ class YoutubeStreamer:
                 '-preset', 'ultrafast',
                 '-r', '60',
                 '-g', str(int(60 * 4)),
+                '-profile:v', 'high',
                 '-c:a', 'aac',
                 '-ac', '2',
                 '-threads', f'{FFMPEG_THREADS_COUNT}',
