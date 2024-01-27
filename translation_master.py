@@ -90,7 +90,7 @@ class YoutubeStreamer:
                 '-f', 'flv',
                 '-preset', 'ultrafast',
                 '-r', '60',
-                '-g', str(int(60 * 3.5)),
+                '-g', str(int(60 * 3)),
                 '-profile:v', 'high',
                 '-c:a', 'aac',
                 '-ac', '2',
