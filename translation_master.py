@@ -89,7 +89,6 @@ class YoutubeStreamer:
                 '-pix_fmt', 'yuv420p',
                 '-f', 'flv',
                 '-preset', 'fast',
-                '-crf', '23',
                 '-r', '60',
                 '-g', str(int(60 * 3)),
                 '-profile:v', 'high',
