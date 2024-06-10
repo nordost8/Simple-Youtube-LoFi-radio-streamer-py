@@ -18,6 +18,7 @@ import time
 
 import numpy as np
 import pygame
+import winsound
 from pydub import AudioSegment
 
 import fft_analyzer
@@ -53,37 +54,16 @@ class DynamicWriter:
 
         ffmpeg_command = [
             "-y",
-            "-i",
-            ROOT_DIRECTORY + "/temp/result.mp4",
-            "-c:v",
-            "libx264",
-            "-preset",
-            "ultrafast",
-            "-r",
-            "60",
-            ROOT_DIRECTORY + "/temp/result_60_fps.mp4",
-        ]
-
-        self.writer.execute_ffmpeg_cmd(ffmpeg_command)
-
-        time.sleep(1)
-
-        ffmpeg_command = [
-            "-y",
-            "-i",
-            ROOT_DIRECTORY + "/temp/result_60_fps.mp4",
-            "-i",
-            self.audio_path,
-            "-c:v",
-            "copy",
-            "-c:a",
-            "copy",
-            "-map",
-            "0:v:0",
-            "-map",
-            "1:a:0",
+            "-i", ROOT_DIRECTORY + "/temp/result.mp4",
+            "-i", self.audio_path,
+            "-c:v", "libx264",
+            "-preset", "ultrafast",
+            "-r", "60",
+            "-c:a", "copy",
+            "-map", "0:v:0",
+            "-map", "1:a:0",
             "-shortest",
-            PATH_TO_VIDEOS_FOLDER + "/" + self.audio_name + '.mp4',
+            PATH_TO_VIDEOS_FOLDER + "/" + self.audio_name + '.mp4'
         ]
 
         self.writer.execute_ffmpeg_cmd(ffmpeg_command)
@@ -138,12 +118,13 @@ def run():
             audio_path = audios[audio_name]
             try:
                 audio_path_enchanted = enchant_audio(audio_path, audio_name)
-                background_path = os.path.join(ROOT_DIRECTORY, 'resource/image.jpg')
+                background_path = os.path.join(ROOT_DIRECTORY, 'background.mp4')
                 dw = DynamicWriter(audio_path=audio_path_enchanted, audio_name=audio_name)
                 fft_analyzer.fft_analyzer(audio_path=audio_path_enchanted, background_path=background_path,
                                           ready_frame_callback=dw.ready_frame_callback)
                 dw.stop()
             except Exception as e:
+                #winsound.Beep(1000, 25000)
                 print("Failed to generate video for audio: ", audio_path)
                 print(e)
             time.sleep(1)

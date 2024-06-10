@@ -50,8 +50,8 @@ class StreamAnalyzer:
         self.rate = self.stream_reader.rate
 
         # Custom settings:
-        self.rolling_stats_window_s = 20  # The axis range of the FFT features will adapt dynamically using a window of N seconds
-        self.equalizer_strength = 0.20  # [0-1] --> gradually rescales all FFT features to have the same mean
+        self.rolling_stats_window_s = 10  # The axis range of the FFT features will adapt dynamically using a window of N seconds
+        self.equalizer_strength = 0.50  # [0-1] --> gradually rescales all FFT features to have the same mean
         self.apply_frequency_smoothing = True  # Apply a postprocessing smoothing filter over the FFT outputs
 
         if self.apply_frequency_smoothing:
@@ -112,8 +112,9 @@ class StreamAnalyzer:
         print('fft_fps:', self.fft_fps)
         print('rolling_stats_window_s:', self.rolling_stats_window_s)
         print('rolling_stats_window_n:', self.rolling_stats_window_n)
+        # We specify the number of windows over which the average will be computed.
         self.rolling_bin_values = numpy_data_buffer(self.rolling_stats_window_n, self.n_frequency_bins,
-                                                    start_value=25000)
+                                                    start_value=1)
         self.bin_mean_values = np.ones(self.n_frequency_bins)
 
         print("Using FFT_window_size length of %d for FFT ---> window_size = %dms" % (

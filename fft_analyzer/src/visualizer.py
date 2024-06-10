@@ -1,8 +1,33 @@
 import os
+from enum import Enum
+
+import cv2
 import numpy as np
 import math
 import pygame
 from matplotlib import cm
+
+from vidgear.gears import VideoGear
+
+
+class MediaFile(Enum):
+    IMAGE_EX = "IMAGE_EX"
+    VIDEO_EX = "VIDEO_EX"
+    INVALID = "INVALID"
+
+
+def get_determine_media_type(file_path):
+    # Список допустимих розширень для зображень і відео
+    valid_image_extensions = {'jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp'}
+    valid_video_extensions = {'mp4', 'avi', 'mov', 'mkv', 'flv', 'wmv', 'webm'}
+    parts = file_path.lower().split('.')
+    if len(parts) > 1:
+        extension = parts[-1]
+        if extension in valid_image_extensions:
+            return MediaFile.IMAGE_EX
+        elif extension in valid_video_extensions:
+            return MediaFile.VIDEO_EX
+    return MediaFile.INVALID
 
 
 class SpectrumVisualizer:
@@ -11,11 +36,38 @@ class SpectrumVisualizer:
     """
     nummer = 1
 
+    def create_video_frame_generator(self):
+        media_path = self.ear.background_path
+        media_type = get_determine_media_type(media_path)
+        if media_type is MediaFile.IMAGE_EX:
+            background = pygame.image.load(media_path)
+            yield pygame.transform.scale(background, (self.WIDTH, self.MAIN_SCREEN_HEIGHT))
+        elif media_type is MediaFile.VIDEO_EX:
+            self.stream = VideoGear(source=media_path).start()
+            while True:
+                frame = self.stream.read()
+                if frame is None:
+                    self.stream.stop()
+                    self.stream = VideoGear(source=media_path).start()
+                    continue
+
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                frame = cv2.resize(frame, (self.WIDTH, self.MAIN_SCREEN_HEIGHT))
+                yield pygame.surfarray.make_surface(frame.swapaxes(0, 1))
+        elif media_type is MediaFile.INVALID:
+            assert media_type != MediaFile.INVALID, (
+                f"Invalid file type for '{media_path}'. Please use an image or video file for the "
+                f"background."
+            )
+
+    @property
+    def next_video_frame(self):
+        return next(self.frame_ganerator)
+
     def __init__(self, ear):
         self.screen = None
         self.prev_additional_surface = None
         self.additional_surface = None
-        self.background_image = None
         self.ear = ear
         window_ratio = self.ear.window_ratio
 
@@ -80,19 +132,19 @@ class SpectrumVisualizer:
         self.fps = 0
         self._is_running = False
 
+        self.frame_ganerator = self.create_video_frame_generator()
+
+
     def start(self):
         print("Starting spectrum visualizer...")
         os.environ["SDL_VIDEODRIVER"] = "dummy"  # Not showing pygame window
         pygame.init()
 
-        self.running_line_font = pygame.font.Font(None, 20)
+        self.running_line_font = pygame.font.Font(None, 40)
         self.running_line_surface = self.running_line_font.render(self.running_line_text, True, (255, 255, 255))
 
         self.screen = pygame.display.set_mode((self.WIDTH, self.MAIN_SCREEN_HEIGHT))
-        self.background_image = pygame.image.load(self.ear.background_path)
-        self.background_image = pygame.transform.scale(self.background_image, (self.WIDTH, self.MAIN_SCREEN_HEIGHT))
-        self.screen.blit(self.background_image, (0, 0))
-
+        
         # Additional surface for bars (transparent):
         self.additional_surface = pygame.Surface((self.WIDTH, self.BARS_SURFACE_HEIGHT), pygame.SRCALPHA)
 
@@ -122,6 +174,8 @@ class SpectrumVisualizer:
             self.move_fraction * self.BARS_SURFACE_HEIGHT)
         self.additional_surface.blit(prev_additional_surface, new_pos)
 
+        self.screen.blit(self.next_video_frame, (0, 0))
+
         self.plot_bars()
 
         combined_surface = pygame.Surface((self.WIDTH, self.MAIN_SCREEN_HEIGHT), pygame.SRCALPHA)
@@ -139,13 +193,15 @@ class SpectrumVisualizer:
         combined_surface.blit(self.additional_surface, (0, position_y))
 
         combined_surface.blit(self.running_line_surface,
-                              (self.WIDTH - self.running_line_surface.get_width() - 20, self.MAIN_SCREEN_HEIGHT - 30))
+                              (self.WIDTH - self.running_line_surface.get_width() - 40, self.MAIN_SCREEN_HEIGHT - 60))
 
         # Callback mode if ear.ready_frame_bacllback exists or save images:
         if hasattr(self.ear, 'ready_frame_callback'):
             self.ear.ready_frame_callback(combined_surface)
         else:
-            pygame.image.save(combined_surface, TEMP_FRAMES_PATH + f's_{self.nummer:05}.jpg')
+            # Callback mode if ear.ready_frame_bacllback exists or save images:
+            pygame.image.save(combined_surface,
+                              'C:/Users/mykyt/PycharmProjects/MagicFFTaudioVisualizer/temp/temp_screens/' + f's_{self.nummer:05}.jpg')
             self.nummer += 1
 
     def plot_bars(self):
