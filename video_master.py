@@ -18,7 +18,7 @@ import time
 
 import numpy as np
 import pygame
-import winsound
+#import winsound
 from pydub import AudioSegment
 
 import fft_analyzer
