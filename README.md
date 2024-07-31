@@ -3,7 +3,7 @@
 
 **Simply watch this YouTube video and judge for yourself (clickable):**
 
-[![Watch the video](https://img.youtube.com/vi/PbPL1uChWfQ/maxresdefault.jpg)](https://youtu.be/miWV4b2pJ64)
+[![Watch the video](https://img.youtube.com/vi/PbPL1uChWfQ/maxresdefault.jpg)](https://youtu.be/PbPL1uChWfQ)
 
 **Usage:**
 
