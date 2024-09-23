@@ -38,7 +38,7 @@ The code is relatively straightforward and customizable. You can easily modify a
 
 Wishing you successful radio streams and many listeners!
 
-**[ACTUAL DEMO](https://www.youtube.com/watch?v=5PRkhPe_F3E)**
+**[ACTUAL DEMO](https://youtu.be/AYwRP-YHeew)**
 
 **Technologies used include:**
 - FFT analyzer for Animation Frames (FFT is used to analyze audio, extracting frequency data to generate synchronized, visually appealing animation frames)
