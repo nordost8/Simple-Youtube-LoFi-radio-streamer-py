@@ -3,7 +3,7 @@
 
 **Simply watch this YouTube video and judge for yourself (clickable):**
 
-[![Watch the video](https://img.youtube.com/vi/PbPL1uChWfQ/maxresdefault.jpg)](https://www.youtube.com/@ukrainiandoomer/streams)
+[![Watch the video](https://img.youtube.com/vi/PbPL1uChWfQ/maxresdefault.jpg)](https://youtu.be/PbPL1uChWfQ)
 
 **Usage:**
 
@@ -38,7 +38,7 @@ The code is relatively straightforward and customizable. You can easily modify a
 
 Wishing you successful radio streams and many listeners!
 
-**[ACTUAL DEMO](https://youtu.be/AYwRP-YHeew)**
+**[ACTUAL DEMO](https://www.youtube.com/@ukrainiandoomer/streams)**
 
 **Technologies used include:**
 - FFT analyzer for Animation Frames (FFT is used to analyze audio, extracting frequency data to generate synchronized, visually appealing animation frames)
